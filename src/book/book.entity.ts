@@ -27,7 +27,7 @@ export class Book extends BaseEntity {
     @ManyToMany(type => Author, author => author.book, {eager:true, onDelete: 'CASCADE'} )
     @JoinTable()
     author: Author[];
-    @OneToMany(type => Loan, loan => loan.book, {eager:false})
+    @OneToMany(type => Loan, loan => loan.book, {eager:true, onDelete: 'CASCADE'})
     loan: Loan[];
 
 

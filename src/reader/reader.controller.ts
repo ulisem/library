@@ -43,7 +43,7 @@ export class ReaderController {
     }
 
 
-    @UseGuards(AuthGuard())
+    @UseGuards(AuthGuard('reader'))
     @Patch('/:id')
     updateReader(@Param('id', ParseUUIDPipe) id:string,@Body(ValidationPipe) authCredentialsDto: CreateReaderCredentialsDto){
         return this.authService.updateReader(id,authCredentialsDto)
@@ -54,7 +54,7 @@ export class ReaderController {
         return this.authService.signin(authCredentialsDto);
     }
 
-    @Post('/test')
+    @Post('/me')
     @UseGuards(AuthGuard())
     test(@GetReader() user: Reader){
         console.log(user);

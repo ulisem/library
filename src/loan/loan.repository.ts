@@ -56,6 +56,7 @@ export class LoanRepository extends Repository<Loan>{
         const query = this.createQueryBuilder('loan');
 
         query.where('loan.readerId = :readerId', {readerId: user.id});
+        query.leftJoinAndSelect("loan.book","book");
 
         if(status){
             query.andWhere('loan.status = :status', {status });

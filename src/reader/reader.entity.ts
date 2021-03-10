@@ -40,7 +40,7 @@ export class Reader extends BaseEntity {
     debt:number;
     @Column()
     img:string;
-    @OneToMany(type => Loan, loan => loan.book, {eager:false})
+    @OneToMany(type => Loan, loan => loan.book, {eager:true, onDelete:"CASCADE"})
     loan: Loan[];
 
 
