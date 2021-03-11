@@ -18,8 +18,10 @@ export class LoanController {
 
     @UseGuards(AuthGuard('admin'))
     @Get()
-    getLoans(): Promise<Loan[]>{
-        return this.loanService.getLoan();
+    getLoans(@Query(ValidationPipe) filterDto: GetLoanFilterDto): Promise<Loan[]>{
+
+        
+        return this.loanService.getLoan(filterDto);
     }
 
 

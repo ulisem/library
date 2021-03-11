@@ -16,8 +16,16 @@ export class LoanRepository extends Repository<Loan>{
    
    
 
-    async getLoan():Promise<Loan[]>{
+    async getLoan(filterDto: GetLoanFilterDto):Promise<Loan[]>{
+
+        const {status} = filterDto;
         const query = this.createQueryBuilder('Loan');
+        console.log(status);
+
+        if(status){
+            query.andWhere('Loan.status = :status', {status });
+
+        } 
 
         try {
 
@@ -29,6 +37,9 @@ export class LoanRepository extends Repository<Loan>{
             throw new InternalServerErrorException();
             
         }
+
+      
+            
 
 
     }

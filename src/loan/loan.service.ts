@@ -25,8 +25,8 @@ export class LoanService {
     }
 
 
-    async getLoan(): Promise<Loan[]>{
-        return this.loanRepository.getLoan();
+    async getLoan(filterDto: GetLoanFilterDto): Promise<Loan[]>{
+        return this.loanRepository.getLoan(filterDto);
     }
 
 
