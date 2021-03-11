@@ -55,6 +55,15 @@ export class ReaderService {
          return { accesToken};
     }
 
+    async deleteReader(id: string ):Promise<void>{
+      
+        const result = await this.ReaderRepository.delete(id);
+        if (result.affected === 0){
+            throw new NotFoundException(`reader with Id ${id} not found`);  
+        }
+        
+    }
+
 
     async updateReader(id: string,authCredentialsDto: CreateReaderCredentialsDto):Promise<Reader>{
         const { email, password, lastname, firstname, phoneNumber, state, neigborhood, street, extnumber, intnumber, img,city } = authCredentialsDto;

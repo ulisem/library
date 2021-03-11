@@ -1,4 +1,4 @@
-import { Controller, Post, Body, ValidationPipe, UseGuards, Get, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
+import { Controller, Post, Body, ValidationPipe, UseGuards, Get, Param, ParseUUIDPipe, Patch, Delete } from '@nestjs/common';
 import { ReaderService } from './reader.service';
 import { CreateReaderCredentialsDto } from './dto/reader.create.dto';
 import { ReaderCredentialsDto } from './dto/reader.logging.dto';
@@ -47,6 +47,13 @@ export class ReaderController {
     @Patch('/:id')
     updateReader(@Param('id', ParseUUIDPipe) id:string,@Body(ValidationPipe) authCredentialsDto: CreateReaderCredentialsDto){
         return this.authService.updateReader(id,authCredentialsDto)
+    }
+
+
+    @UseGuards(AuthGuard('admin'))
+    @Delete('/:id', )
+    deleteBook(@Param('id',ParseUUIDPipe) id:string): Promise<void>{
+        return this.authService.deleteReader(id);   
     }
 
     @Post('/sigin')

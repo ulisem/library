@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Body, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, UseGuards, Body, ValidationPipe, Get, Param, ParseUUIDPipe, Patch, Delete } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AdminService } from './admin.service';
 import { CreateAdminCredentialsDto } from './dto/admin.create.dto';
@@ -14,6 +14,41 @@ export class AdminController {
     ){
 
     }
+
+    @UseGuards(AuthGuard('admin'))
+    @Get()
+    getReaders(): Promise<Admin[]>{
+        return this.authService.getReader();
+    }
+
+
+
+    @UseGuards(AuthGuard('admin'))
+    @Get('/:id')
+    getReaderById(@Param('id', ParseUUIDPipe) id:string): Promise<Admin>{
+        return this.authService.getReaderForId(id);
+    }
+
+
+    @UseGuards(AuthGuard('admin'))
+    @Patch('/:id')
+    updateAdmin(@Param('id', ParseUUIDPipe) id:string,@Body(ValidationPipe) authCredentialsDto: CreateAdminCredentialsDto  ): Promise<Admin>{
+        return this.authService.updateReader(id,authCredentialsDto);
+    }
+
+    @UseGuards(AuthGuard('admin'))
+    @Delete('/:id', )
+    deleteBook(@Param('id',ParseUUIDPipe) id:string): Promise<void>{
+        return this.authService.deleteAdmin(id);   
+    }
+
+
+
+    @UseGuards(AuthGuard('reader'))
+    @Get('/me/:id')
+    getReaderMeById(@Param('id', ParseUUIDPipe) id:string): Promise<Admin>{
+        return this.authService.getReaderForId(id);
+    }
     
     @Post('/signup')
     signUp(@Body(ValidationPipe) authCredentialsDto: CreateAdminCredentialsDto ){
@@ -27,10 +62,9 @@ export class AdminController {
         return this.authService.signin(authCredentialsDto);
     }
 
-    @Post('/test')
+    @Post('/me')
     @UseGuards(AuthGuard())
     test(@GetAdmin() admin: Admin){
-        console.log(admin);
         return admin;
     }
     

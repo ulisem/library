@@ -8,11 +8,11 @@ import { Reader } from "src/reader/reader.entity";
 export class Loan extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     id:string;
-    @ManyToOne(type => Book, book => book.loan, { eager: false })
+    @ManyToOne(type => Book, book => book.loan, { eager: false, onDelete: "CASCADE" })
     book:Book;
     @PrimaryColumn()
     bookId:string;
-    @ManyToOne(type => Reader, reader => reader.loan, { eager: false })
+    @ManyToOne(type => Reader, reader => reader.loan, { eager: false, onDelete: "CASCADE" })
     reader:Reader;
     @PrimaryColumn()
     readerId:string;

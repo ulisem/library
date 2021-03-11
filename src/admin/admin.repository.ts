@@ -21,7 +21,7 @@ export class AdminRepository extends Repository<Admin>{
         user.lastname = lastname;
         user.firstname = firstname;
         user.phoneNumber = phoneNumber;
-        if(role == "Admin"){
+        if(role == "ADMINISTRADOR"){
         user.role = roleAdmin.ADMINS;
         }else{
         user.role = roleAdmin.BIBLIOTECARY;
@@ -52,7 +52,6 @@ export class AdminRepository extends Repository<Admin>{
         const user = await query.getOne();
 
 
-        console.log(user);
 
 
         try {
@@ -83,6 +82,22 @@ export class AdminRepository extends Repository<Admin>{
 
 
 
+
+
+    }
+
+    async getAdmins():Promise<Admin[]>{
+        const query = this.createQueryBuilder('sdmin');
+
+        try {
+
+        const reader = await query.getMany();
+        return reader; 
+            
+        } catch (error) {
+            throw new InternalServerErrorException();
+            
+        }
 
 
     }

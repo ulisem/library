@@ -90,7 +90,9 @@ export class LoanRepository extends Repository<Loan>{
        console.log(one,"oooneee");
        console.log(two, "twoooooo");
 
-       if(one.length > 5 || two.length > 5){
+
+
+       if(one.length + two.length > 5){
         throw new NotFoundException(`Superaste el número maximo de solicitudes para tener un libro espera a devolver las solicitudes que tienes o a que estás terminen `);
      
        }

@@ -14,7 +14,7 @@ export class Author extends BaseEntity {
     nacionality:string;
     @Column({type: 'timestamp'})
     birthdate:Date;
-    @ManyToMany(type => Book, book => book.author, { eager: false})
+    @ManyToMany(type => Book, book => book.author, { eager: false, onDelete: "CASCADE"})
     book:Book[]; 
 
 
