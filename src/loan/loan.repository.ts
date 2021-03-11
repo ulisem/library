@@ -20,6 +20,10 @@ export class LoanRepository extends Repository<Loan>{
 
         const {status} = filterDto;
         const query = this.createQueryBuilder('Loan');
+        query.leftJoinAndSelect("Loan.book","book");
+
+        query.leftJoinAndSelect("Loan.reader","reader");
+
         console.log(status);
 
         if(status){
