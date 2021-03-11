@@ -6,6 +6,8 @@ import { GetReader } from 'src/reader/get-reader-decorator';
 import { Reader } from 'src/reader/reader.entity';
 import { createLoanDto } from './dto/Loan.create.dto';
 import { GetLoanFilterDto } from './dto/get-loan-filter.dto';
+import { GetAdmin } from 'src/admin/get-admin-decorator';
+import { Admin } from 'src/admin/admin.entity';
 
 @Controller('loan')
 export class LoanController {
@@ -60,17 +62,25 @@ export class LoanController {
 
     @UseGuards(AuthGuard('admin'))
     @Patch('/approve/:id')
-    updateLoanStatus(@Param('id',ParseUUIDPipe) id: string, @GetReader() user: Reader): Promise<Loan>{
+    updateLoanStatus(@Param('id',ParseUUIDPipe) id: string, @GetAdmin() user: Admin): Promise<Loan>{
         
-        return this.loanService.approveLoan(id,user);
+        return this.loanService.approveLoan(id);
 
     }
 
     @UseGuards(AuthGuard('admin'))
     @Patch('/return/:id')
-    returnLoanStatus(@Param('id',ParseUUIDPipe) id: string,@Body() readerId: string,@GetReader() user: Reader): Promise<Loan>{
+    returnLoanStatus(@Param('id',ParseUUIDPipe) id: string,@Body() readerId: string,@GetAdmin() user: Admin): Promise<Loan>{
         
-        return this.loanService.returnLoan(id,readerId,user);
+        return this.loanService.returnLoan(id,readerId);
+
+    }
+
+    @UseGuards(AuthGuard('admin'))
+    @Patch('/cancel/:id')
+    cancelLoanStatus(@Param('id',ParseUUIDPipe) id: string,@Body() readerId: string,@GetAdmin() user: Admin): Promise<Loan>{
+        
+        return this.loanService.cancelLoan(id);
 
     }
 }

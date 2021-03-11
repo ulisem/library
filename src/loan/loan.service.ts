@@ -11,6 +11,7 @@ import { statusLoan } from './create-status';
 import { GetLoanFilterDto } from './dto/get-loan-filter.dto';
 
 import * as moment from 'moment'
+import { Admin } from 'src/admin/admin.entity';
 
 @Injectable()
 export class LoanService {
@@ -74,7 +75,7 @@ export class LoanService {
 
 
 
-    async approveLoan(id: string, idReader:Reader): Promise<Loan>{
+    async approveLoan(id: string): Promise<Loan>{
         
         
         const loan = await this.getLoanForId(id);
@@ -96,7 +97,7 @@ export class LoanService {
     }
 
 
-    async cancelLoan(id: string, idReader:Reader): Promise<Loan>{
+    async cancelLoan(id: string): Promise<Loan>{
         
         
         const loan = await this.getLoanForId(id);
@@ -117,7 +118,7 @@ export class LoanService {
 
 
 
-    async returnLoan(id: string,idReader:any,idreader:Reader): Promise<Loan>{
+    async returnLoan(id: string,idReader:string): Promise<Loan>{
        
 
 
@@ -131,14 +132,11 @@ export class LoanService {
 
         let price:number = moment().diff(moment(Loan.aprobedDate),'days');
 
-        if(Loan.status == statusLoan.DEVUELTO){
-
-            throw new NotFoundException(`Loan with Id ${id} is right now devuelto `);  
-        }
+       
         
         if(price > 0 ){
 
-            const updateReader = await this.readerService.updateDebt(idReader.readerId,price*5);
+            const updateReader = await this.readerService.updateDebt(idReader,price*5);
            
         }
 
